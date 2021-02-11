@@ -1,6 +1,6 @@
 const Movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
-// const BadRequestError = require('../errors/BadRequestError');
+const ForbiddenError = require('../errors/ForbiddenError');
 const {
   OK_CODE,
   CREATE_CODE,
@@ -16,7 +16,9 @@ const getMovies = (req, res, next) => {
 };
 
 const createMovie = (req, res, next) => {
-  Movie.create(req.body)
+  const { _id } = req.user;
+  const { ...rest } = req.body;
+  Movie.create({ ...rest, owner: _id })
     .then(() => {
       res.status(CREATE_CODE).send({ message: 'Фильм сохранен!' });
     })
@@ -29,6 +31,9 @@ const deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (!movie) {
         return next(new NotFoundError('Такого фильма не существует'));
+      }
+      if (movie.owner !== req.user._id) {
+        return next(new ForbiddenError('Нельзя удалять чужие фильмы'));
       }
       return Movie.findByIdAndRemove(id)
         .then(() => {
