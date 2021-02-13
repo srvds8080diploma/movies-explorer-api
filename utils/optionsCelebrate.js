@@ -26,6 +26,9 @@ const optionsValidUpdateUser = {
     }),
     email: Joi.string().email().messages({
       'string.email': 'Недопустимый формат Email',
+      'string.base': 'Недопустимый формат Email',
+      'any.required': 'Email обязателен',
+
     }),
   }),
 };
