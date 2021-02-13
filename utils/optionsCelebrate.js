@@ -43,7 +43,7 @@ const optionsValidCreateMovie = {
       'any.required': 'Имя режиссера обязательно',
     }),
     duration: Joi.number().required(true),
-    year: Joi.string().required(true).integer().messages({
+    year: Joi.string().required(true).messages({
       'string.integer': 'Не допустимый формат года',
       'string.base': 'Недопустимый формат',
       'string.empty': 'Недопустимый формат',
