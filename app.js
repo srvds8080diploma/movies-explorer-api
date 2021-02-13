@@ -6,7 +6,7 @@ const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes');
 
-const { PORT = 3000, PATH_DB } = process.env;
+const { PORT = 3000, PATH_DB = 'mongodb://localhost:27017/mestodb' } = process.env;
 const app = express();
 
 mongoose.connect(PATH_DB, {
@@ -21,7 +21,6 @@ app.use(routes);
 app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
-  console.log(err);
   const { statusCode = 500, message } = err;
   res
     .status(statusCode)
