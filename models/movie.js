@@ -52,7 +52,6 @@ const movie = new mongoose.Schema({
   owner: {
     type: String,
     required: true,
-    select: false,
   },
   nameRU: {
     type: String,
@@ -62,6 +61,10 @@ const movie = new mongoose.Schema({
     type: String,
     required: true,
   },
+  movieId: {
+    type: String,
+    required: true,
+  },
 });
 
-module.exports = mongoose.model('card', movie);
+module.exports = mongoose.model('movie', movie);
