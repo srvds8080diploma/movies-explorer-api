@@ -17,23 +17,23 @@ const getUser = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователя не существует');
     })
-    .then((user) => res.status(OK_CODE).send(user))
+    .then(({ email, name }) => res.status(OK_CODE).send({ email, name }))
     .catch(next);
 };
 
 const updateUser = (req, res, next) => {
   const { _id } = req.user;
-  const { name, about } = req.body;
-
-  User.findByIdAndUpdate(_id, { name, about }, { new: true })
+  const { name, email } = req.body;
+  User.findByIdAndUpdate(_id, { name, email }, { new: true })
     .orFail(() => {
       throw new NotFoundError('Пользователь по заданному id отсутствует в базе');
     })
-    .then((user) => {
-      res.status(OK_CODE).send(user);
+    .then(({ name: updatedName, email: updatedEmail }) => {
+      res.status(OK_CODE).send({ name: updatedName, email: updatedEmail });
     })
     .catch(next);
 };
+
 const signup = (req, res, next) => {
   const {
     name,
@@ -52,8 +52,8 @@ const signup = (req, res, next) => {
             email,
             password: hash,
           })
-            .then(() => {
-              res.status(CREATE_CODE).send({ message: 'Пользователь успешно создан!' });
+            .then(({ _id, email: returnedEmail }) => {
+              res.status(CREATE_CODE).send({ _id, email: returnedEmail, message: 'Пользователь успешно создан!' });
             })
             .catch(next);
         });
