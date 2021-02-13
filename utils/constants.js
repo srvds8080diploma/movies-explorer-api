@@ -4,7 +4,10 @@ const CREATE_CODE = 201;
 const INTERNAL_SERVER_ERROR_CODE = 500;
 
 const corsOptions = {
-  origin: ['http://localhost:3000'],
+  origin: [
+    'https://api.srvds.students.nomoredomains.monster',
+    'https://srvds.students.nomoredomains.monster',
+  ],
   methods: 'GET, PUT, PATCH, POST, DELETE',
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
