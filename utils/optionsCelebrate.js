@@ -73,7 +73,7 @@ const optionsValidCreateMovie = {
     movieId: Joi.string().required(true).length(24).hex()
       .messages({
         'string.length': 'Не допустимый формат Id',
-        'string.empty': 'Недопустимый формат',
+        'string.empty': 'Недопустимый формат Id',
         'string.hex': 'Не допустимый формат Id',
       }),
   }),
