@@ -7,6 +7,6 @@ const {
 const { optionsValidUpdateUser } = require('../utils/optionsCelebrate');
 
 router.get('/me', getUser);
-router.put('/me', celebrate(optionsValidUpdateUser), updateUser);
+router.patch('/me', celebrate(optionsValidUpdateUser), updateUser);
 
 module.exports = router;
