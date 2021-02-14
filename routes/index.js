@@ -5,6 +5,7 @@ const moviesRoutes = require('./moviesRoutes');
 const auth = require('../middlewares/auth');
 const { signup, signin } = require('../controllers/users');
 const crashTest = require('../controllers/crashTest');
+const NotFoundError = require('../errors/NotFoundError');
 const { optionsValidSign } = require('../utils/optionsCelebrate');
 
 router.post('/signin/', celebrate(optionsValidSign), signin);
@@ -14,7 +15,6 @@ router.get('/crash-test', crashTest);
 router.use('/users/', usersRoutes);
 router.use('/movies/', moviesRoutes);
 router.use((req, res, next) => {
-  res.status(404).send({ error: 'Not found' });
-  next();
+  next(new NotFoundError('Указанный ресурс не найден'));
 });
 module.exports = router;
