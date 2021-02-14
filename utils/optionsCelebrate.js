@@ -70,11 +70,11 @@ const optionsValidCreateMovie = {
         'string.pattern': 'Не допустимый формат ссылки',
         'any.required': 'thumbnail обязательно',
       }),
-    movieId: Joi.string().required().length(24).hex()
+    movieId: Joi.number().required().integer()
       .messages({
-        'string.length': 'Не допустимый формат Id',
-        'string.empty': 'Недопустимый формат Id',
-        'string.hex': 'Не допустимый формат Id',
+        'number.integer': 'Недопустимый формат Id',
+        'number.empty': 'Не допустимый формат Id',
+        'any.required': 'Не допустимый формат Id',
       }),
   }),
 };
