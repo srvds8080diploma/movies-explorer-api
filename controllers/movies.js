@@ -1,6 +1,7 @@
 const Movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
+const ConflictError = require('../errors/ConflictError');
 const {
   OK_CODE,
   CREATE_CODE,
@@ -22,7 +23,12 @@ const createMovie = (req, res, next) => {
     .then(() => {
       res.status(CREATE_CODE).send({ message: 'Фильм сохранен!' });
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.code === 11000) {
+        return next(new ConflictError('Фильм уже добавлен'));
+      }
+      return next();
+    });
 };
 
 const deleteMovie = (req, res, next) => {
