@@ -1,20 +1,24 @@
 const { Joi } = require('celebrate');
-
-const { REGEX_URL } = require('./constants');
+const validator = require('validator');
 
 const optionsValidSign = {
   body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30)
+      .messages({
+        'string.min': 'Имя не должно быть короче 2 символов',
+        'string.max': 'Имя не должно быть больше 30 символов',
+        'string.empty': 'name обязателен',
+        'any.required': 'name обязателен',
+      }),
     email: Joi.string().required().email().messages({
       'string.base': 'Недопустимый формат Email',
       'string.empty': 'Недопустимый формат Email',
       'string.email': 'Недопустимый формат Email',
       'any.required': 'Email обязателен',
     }),
-    password: Joi.string().required().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-      .messages({
-        'string.pattern': 'Недопустимый формат пароля',
-        'any.required': 'Пароль обязателен',
-      }),
+    password: Joi.string().required().messages({
+      'any.required': 'Пароль обязателен',
+    }),
   }),
 };
 
@@ -53,19 +57,34 @@ const optionsValidCreateMovie = {
       'any.required': 'год обязательный параметр',
     }),
     description: Joi.string().required(),
-    image: Joi.string().required().pattern(new RegExp(REGEX_URL))
+    image: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('поле image заполнено некорректно');
+    })
       .messages({
         'string.pattern': 'Не допустимый формат ссылки',
         'any.required': 'image обязательно',
       }),
-    trailer: Joi.string().required().pattern(new RegExp(REGEX_URL))
+    trailer: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('поле trailer заполнено некорректно');
+    })
       .messages({
         'string.pattern': 'Не допустимый формат ссылки',
         'any.required': 'image обязательно',
       }),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
-    thumbnail: Joi.string().required().pattern(new RegExp(REGEX_URL))
+    thumbnail: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('поле thumbnail заполнено некорректно');
+    })
       .messages({
         'string.pattern': 'Не допустимый формат ссылки',
         'any.required': 'thumbnail обязательно',
