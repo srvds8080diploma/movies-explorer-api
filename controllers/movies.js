@@ -41,9 +41,11 @@ const deleteMovie = (req, res, next) => {
       if (movie.owner !== req.user._id) {
         return next(new ForbiddenError('Нельзя удалять чужие фильмы'));
       }
-      return Movie.findByIdAndRemove(id)
-        .then(() => {
-          res.status(OK_CODE).send({ message: 'Фильм успешно удален' });
+      return movie.remove()
+        .then((deletedMovie) => {
+          if (deletedMovie) {
+            res.status(OK_CODE).send({ message: 'Фильм успешно удален' });
+          }
         })
         .catch(next);
     });
