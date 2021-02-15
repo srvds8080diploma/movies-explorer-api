@@ -6,10 +6,10 @@ const auth = require('../middlewares/auth');
 const { signup, signin } = require('../controllers/users');
 const crashTest = require('../controllers/crashTest');
 const NotFoundError = require('../errors/NotFoundError');
-const { optionsValidSign } = require('../utils/optionsCelebrate');
+const { optionsValidSignIn, optionsValidSignUp } = require('../utils/optionsCelebrate');
 
-router.post('/signin/', celebrate(optionsValidSign), signin);
-router.post('/signup/', celebrate(optionsValidSign), signup);
+router.post('/signin/', celebrate(optionsValidSignIn), signin);
+router.post('/signup/', celebrate(optionsValidSignUp), signup);
 router.use(auth);
 router.get('/crash-test', crashTest);
 router.use('/users/', usersRoutes);

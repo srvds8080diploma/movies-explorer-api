@@ -1,7 +1,7 @@
 const { Joi } = require('celebrate');
 const validator = require('validator');
 
-const optionsValidSign = {
+const optionsValidSignUp = {
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30)
       .messages({
@@ -10,6 +10,19 @@ const optionsValidSign = {
         'string.empty': 'name обязателен',
         'any.required': 'name обязателен',
       }),
+    email: Joi.string().required().email().messages({
+      'string.base': 'Недопустимый формат Email',
+      'string.empty': 'Недопустимый формат Email',
+      'string.email': 'Недопустимый формат Email',
+      'any.required': 'Email обязателен',
+    }),
+    password: Joi.string().required().messages({
+      'any.required': 'Пароль обязателен',
+    }),
+  }),
+};
+const optionsValidSignIn = {
+  body: Joi.object().keys({
     email: Joi.string().required().email().messages({
       'string.base': 'Недопустимый формат Email',
       'string.empty': 'Недопустимый формат Email',
@@ -111,7 +124,8 @@ const optionsValidDeleteMovie = {
 };
 
 module.exports = {
-  optionsValidSign,
+  optionsValidSignUp,
+  optionsValidSignIn,
   optionsValidUpdateUser,
   optionsValidCreateMovie,
   optionsValidDeleteMovie,
