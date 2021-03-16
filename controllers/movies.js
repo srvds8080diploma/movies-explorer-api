@@ -20,8 +20,8 @@ const createMovie = (req, res, next) => {
   const { _id } = req.user;
   const { ...rest } = req.body;
   Movie.create({ ...rest, owner: _id })
-    .then(() => {
-      res.status(CREATE_CODE).send({ message: 'Фильм сохранен!' });
+    .then((movie) => {
+      res.status(CREATE_CODE).send({ movie, message: 'Фильм сохранен!' });
     })
     .catch((err) => {
       if (err.code === 11000) {
@@ -44,7 +44,7 @@ const deleteMovie = (req, res, next) => {
       return movie.remove()
         .then((deletedMovie) => {
           if (deletedMovie) {
-            res.status(OK_CODE).send({ message: 'Фильм успешно удален' });
+            res.status(OK_CODE).send({ movie: deletedMovie, message: 'Фильм успешно удален' });
           }
         })
         .catch(next);
