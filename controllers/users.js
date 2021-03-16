@@ -17,7 +17,7 @@ const getUser = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователя не существует');
     })
-    .then(({ email, name }) => res.status(OK_CODE).send({ email, name }))
+    .then(({ email, name, _id }) => res.status(OK_CODE).send({ email, name, _id }))
     .catch(next);
 };
 
@@ -52,8 +52,10 @@ const signup = (req, res, next) => {
             email,
             password: hash,
           })
-            .then(({ _id, email: returnedEmail }) => {
-              res.status(CREATE_CODE).send({ _id, email: returnedEmail, message: 'Пользователь успешно создан!' });
+            .then(({ _id, email: returnedEmail, name: returnedName }) => {
+              res.status(CREATE_CODE).send({
+                _id, email: returnedEmail, name: returnedName, message: 'Пользователь успешно создан!',
+              });
             })
             .catch(next);
         });
@@ -64,12 +66,12 @@ const signin = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
-    .then((user) => {
+    .then(({ name, email: recievedEmail, _id }) => {
       const token = jwt.sign(
-        { _id: user._id },
+        { _id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' },
       );
-      res.send({ token });
+      res.send({ token, name, email: recievedEmail });
     })
     .catch(() => {
       const error = new UnauthorizedError('email или пароль неверные');
