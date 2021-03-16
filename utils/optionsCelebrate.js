@@ -77,7 +77,7 @@ const optionsValidCreateMovie = {
       return helpers.message('поле image заполнено некорректно');
     })
       .messages({
-        'string.pattern': 'Не допустимый формат ссылки',
+        'string.pattern': 'Недопустимый формат ссылки',
         'any.required': 'image обязательно',
       }),
     trailer: Joi.string().required().custom((value, helpers) => {
@@ -88,7 +88,7 @@ const optionsValidCreateMovie = {
     })
       .messages({
         'string.pattern': 'Не допустимый формат ссылки',
-        'any.required': 'image обязательно',
+        'any.required': 'trailer обязательно',
       }),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
@@ -99,6 +99,7 @@ const optionsValidCreateMovie = {
       return helpers.message('поле thumbnail заполнено некорректно');
     })
       .messages({
+        'string.pattern': 'Не допустимый формат ссылки',
         'string.pattern': 'Не допустимый формат ссылки',
         'any.required': 'thumbnail обязательно',
       }),
