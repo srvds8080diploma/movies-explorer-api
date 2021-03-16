@@ -6,8 +6,7 @@ const {
   createMovie,
   deleteMovie,
 } = require('../controllers/movies');
-const { optionsValidCreateMovie } = require('../utils/optionsCelebrate');
-const { optionsValidDeleteMovie } = require('../utils/optionsCelebrate');
+const { optionsValidCreateMovie, optionsValidDeleteMovie } = require('../utils/optionsCelebrate');
 
 router.get('/', getMovies);
 router.post('/', celebrate(optionsValidCreateMovie), createMovie);
