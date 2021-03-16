@@ -7,6 +7,8 @@ const corsOptions = {
   origin: [
     'https://api.srvds.students.nomoredomains.monster',
     'https://srvds.students.nomoredomains.monster',
+    'http://localhost:5000',
+    'http://localhost:3000',
   ],
   methods: 'GET, PUT, PATCH, POST, DELETE',
   allowedHeaders: ['Content-Type', 'Authorization'],
