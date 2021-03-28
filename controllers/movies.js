@@ -8,7 +8,7 @@ const {
 } = require('../utils/constants');
 
 const getMovies = (req, res, next) => {
-  Movie.find({})
+  Movie.find({ owner: req.user._id })
     .orFail(() => {
       throw new NotFoundError('Еще нет сохраненных фильмов');
     })
