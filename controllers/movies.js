@@ -12,7 +12,7 @@ const getMovies = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Еще нет сохраненных фильмов');
     })
-    .then((user) => res.status(OK_CODE).send(user))
+    .then((movies) => res.status(OK_CODE).send(movies))
     .catch(next);
 };
 
