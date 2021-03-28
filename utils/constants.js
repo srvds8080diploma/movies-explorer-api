@@ -5,8 +5,8 @@ const INTERNAL_SERVER_ERROR_CODE = 500;
 
 const corsOptions = {
   origin: [
-    'https://api.srvds.students.nomoredomains.monster',
-    'https://srvds.students.nomoredomains.monster',
+    'https://api.srvds8080.xyz/',
+    'https://srvds8080.xyz/',
     'http://localhost:5000',
     'http://localhost:3000',
   ],
