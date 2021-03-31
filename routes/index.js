@@ -10,8 +10,8 @@ const { optionsValidSignIn, optionsValidSignUp } = require('../utils/optionsCele
 
 router.post('/signin/', celebrate(optionsValidSignIn), signin);
 router.post('/signup/', celebrate(optionsValidSignUp), signup);
-router.use(auth);
 router.get('/crash-test', crashTest);
+router.use(auth);
 router.use('/users/', usersRoutes);
 router.use('/movies/', moviesRoutes);
 router.use((req, res, next) => {
